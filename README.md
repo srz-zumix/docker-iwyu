@@ -9,4 +9,4 @@ https://hub.docker.com/r/srzzumix/iwyu/
 
 ## Usage
 
-docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu -c "CXX=iwyu CC=iwyu <your build command>"
+docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu -c "CXX=iwyu CC=iwyu \<your build command\>"
