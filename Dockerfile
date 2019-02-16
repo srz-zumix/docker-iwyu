@@ -2,7 +2,7 @@ FROM ubuntu:xenial
 
 LABEL maintainer "srz_zumix <https://github.com/srz-zumix>"
 
-ARG CLANG_VERSION=6.0
+ENV CLANG_VERSION=6.0
 
 RUN apt-get update -q -y && \
     apt-get install -y software-properties-common
