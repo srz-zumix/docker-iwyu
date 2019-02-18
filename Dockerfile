@@ -4,11 +4,13 @@ LABEL maintainer "srz_zumix <https://github.com/srz-zumix>"
 
 ENV CLANG_VERSION=6.0
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update -q -y && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-get update -q -y && \
     apt-get install -y --no-install-recommends wget sudo curl git make cmake gcc g++ \
-        libncurses-dev zlib1g-dev && \
+        libncurses-dev zlib1g-dev \
+        python2.7 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 # RUN apt-get install -y iwyu
@@ -33,7 +35,7 @@ RUN mkdir iwyu && \
  #   cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-7 ../include-what-you-use && \
     make && make install
 
-RUN ln -s $(which include-what-you-use) /usr/local/bin/iwyu
+RUN ln -s "$(which include-what-you-use)" /usr/local/bin/iwyu
 # RUN echo "alias iwyu=include-what-you-use" >> ~/.bashrc
 
 RUN mkdir /target
