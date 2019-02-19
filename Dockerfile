@@ -1,7 +1,6 @@
 FROM ubuntu:xenial
 
 LABEL maintainer "srz_zumix <https://github.com/srz-zumix>"
-
 ENV CLANG_VERSION=6.0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -28,17 +27,16 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
 #     update-alternatives --config clang && \
 #     update-alternatives --config clang++
 
-RUN mkdir iwyu && \
+RUN mkdir /target && \
+    mkdir iwyu && \
     git clone -b clang_6.0 https://github.com/include-what-you-use/include-what-you-use.git iwyu/include-what-you-use && \
     cd iwyu && mkdir build && cd build && \
     cmake -G "Unix Makefiles" -DIWYU_LLVM_ROOT_PATH=/usr/lib/llvm-${CLANG_VERSION} ../include-what-you-use && \
- #   cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-7 ../include-what-you-use && \
-    make && make install
+    # cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-7 ../include-what-you-use && \
+    make && make install && \
+    ln -s "$(command -v include-what-you-use)" /usr/local/bin/iwyu
+    # echo "alias iwyu=include-what-you-use" >> ~/.bashrc
 
-RUN ln -s "$(command -v include-what-you-use)" /usr/local/bin/iwyu
-# RUN echo "alias iwyu=include-what-you-use" >> ~/.bashrc
-
-RUN mkdir /target
 VOLUME [ "/target" ]
 WORKDIR /target
 
