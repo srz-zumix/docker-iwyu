@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update -q -y && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-get update -q -y && \
-    apt-get install -y --no-install-recommends wget sudo curl git make cmake gcc g++ \
+    apt-get install -y --no-install-recommends wget curl git make cmake gcc g++ \
         libncurses-dev zlib1g-dev \
         python && \
     apt-get clean && \
@@ -17,7 +17,7 @@ RUN apt-get update -q -y && \
 
 
 # clang
-RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - && \
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-${CLANG_VERSION} main" && \
     apt-get update && \
     apt-get install -y --no-install-recommends llvm-${CLANG_VERSION}-dev libclang-${CLANG_VERSION}-dev clang-${CLANG_VERSION} && \
@@ -35,7 +35,7 @@ RUN mkdir iwyu && \
  #   cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-7 ../include-what-you-use && \
     make && make install
 
-RUN ln -s "$(which include-what-you-use)" /usr/local/bin/iwyu
+RUN ln -s "$(command -v include-what-you-use)" /usr/local/bin/iwyu
 # RUN echo "alias iwyu=include-what-you-use" >> ~/.bashrc
 
 RUN mkdir /target
