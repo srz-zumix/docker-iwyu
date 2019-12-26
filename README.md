@@ -6,7 +6,7 @@
 [DockerHub](https://hub.docker.com/r/srzzumix/iwyu/)
 
 * Ubuntu:bionic
-* include-what-you-use clang_9
+* include-what-you-use clang_6.0
 
 ## Usage
 
