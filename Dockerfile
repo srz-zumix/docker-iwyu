@@ -1,7 +1,7 @@
 FROM ubuntu:bionic
 
 LABEL maintainer "srz_zumix <https://github.com/srz-zumix>"
-ENV CLANG_VERSION=6.0
+ENV CLANG_VERSION=9
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update -q -y && \
