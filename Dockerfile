@@ -32,6 +32,11 @@ RUN cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-${CLANG_VERSION}
     make && make install && \
     ln -s "$(command -v include-what-you-use)" /usr/local/bin/iwyu
 
+# Make the compiler built-in includes accessible to iwyu
+RUN mkdir /usr/local/lib/clang && \
+    ln -s /usr/lib/clang/* /usr/local/lib/clang/
+
+
 VOLUME [ "/target" ]
 WORKDIR /target
 
