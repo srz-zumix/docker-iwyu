@@ -1,8 +1,10 @@
-FROM ubuntu:bionic
+ARG UBUNTU_VERSION=latest
+FROM ubuntu:$UBUNTU_VERSION
+ARG UBUNTU_VERSION
 
 LABEL maintainer "srz_zumix <https://github.com/srz-zumix>"
-ENV IWYU_VERSION=clang_9.0
-ENV CLANG_VERSION=9
+ARG IWYU_VERSION=clang_9.0
+ARG CLANG_VERSION=9
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update -q -y && \
@@ -17,7 +19,8 @@ RUN apt-get update -q -y && \
 
 # clang
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-${CLANG_VERSION} main" && \
+    source /etc/os-release && \
+    apt-add-repository "deb http://apt.llvm.org/${UBUNTU_CODENAME}/ llvm-toolchain-${UBUNTU_CODENAME}-${CLANG_VERSION} main" && \
     apt-get update && \
     apt-get install -y --no-install-recommends llvm-${CLANG_VERSION}-dev libclang-${CLANG_VERSION}-dev clang-${CLANG_VERSION} && \
     apt-get clean && \
