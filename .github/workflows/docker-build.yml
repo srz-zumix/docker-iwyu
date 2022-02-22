@@ -33,6 +33,12 @@ jobs:
         with:
           push: false
           tags: srzzumix/iwyu:latest
+      - name: Push to latest
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: srzzumix/iwyu:latest
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/master')
       - name: Push to version tag
         env:
           DOCKER_TAG: latest
