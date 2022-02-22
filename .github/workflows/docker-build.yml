@@ -20,7 +20,6 @@ on:
 jobs:
   push_to_registries:
     runs-on: ubuntu-latest
-    needs: prepare
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
