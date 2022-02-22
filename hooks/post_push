@@ -3,7 +3,7 @@ set -eu
 
 IWYU_VERSION_STR=$(docker run --rm ${IMAGE_NAME} --version)
 IWYU_VERSION=$(echo ${IWYU_VERSION_STR} | sed "s/.*include-what-you-use\s*\([0-9]*\.[0-9]*\).*/\1/")
-CLANG_VERSION=$(echo ${IWYU_VERSION_STR} | sed "s/.*based on clang version\s*\([0-9]*\.[0-9]*.[0-9]*\).*/\1/")
+CLANG_VERSION=$(echo ${IWYU_VERSION_STR} | sed "s/.*based on .* clang version\s*\([0-9]*\.[0-9]*.[0-9]*\).*/\1/")
 CLANG_MAJOR=${CLANG_VERSION%%.*}
 
 function tag () {

@@ -3,8 +3,8 @@ FROM ubuntu:$UBUNTU_VERSION
 ARG UBUNTU_VERSION
 
 LABEL maintainer "srz_zumix <https://github.com/srz-zumix>"
-ARG IWYU_VERSION=clang_9.0
-ARG CLANG_VERSION=9
+ARG IWYU_VERSION=clang_13
+ARG CLANG_VERSION=13
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update -q -y && \
