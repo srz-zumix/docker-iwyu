@@ -12,6 +12,7 @@ function tag () {
 }
 
 tag "${DOCKER_TAG}-clang-${CLANG_MAJOR}"
+tag "${DOCKER_TAG}-iwyu-${IWYU_VERSION}"
 tag "${DOCKER_TAG}-iwyu-${IWYU_VERSION}-clang-${CLANG_MAJOR}"
 
 if [ "${DOCKER_TAG}" = "latest" ]; then
