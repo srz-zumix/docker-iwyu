@@ -24,5 +24,5 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: Docker Build
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DISPATH_TOKEN }}
           inputs: '{ "ubuntu_version": "${{ github.event.inputs.ubuntu_version }}", "clang_version": "${{ matrix.clang_version }}", "iwyu_baranch": "${{ matrix.iwyu_baranch }}" }'
