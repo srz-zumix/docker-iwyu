@@ -14,11 +14,11 @@ jobs:
       matrix:
         include:
           - clang_version: 10
-            iwyu_baranch: clagn_10
+            iwyu_baranch: clang_10
           - clang_version: 11
-            iwyu_baranch: clagn_11
+            iwyu_baranch: clang_11
           - clang_version: 12
-            iwyu_baranch: clagn_12
+            iwyu_baranch: clang_12
     steps:
       - name: Invoke workflow
         uses: benc-uk/workflow-dispatch@v1
