@@ -18,9 +18,9 @@ on:
         required: true
 
 env:
-  - UBUNTU_VERSION: ${{ github.event.inputs.ubuntu_version }}
-  - CLANG_VERSION: ${{ github.event.inputs.clang_version }}
-  - IWYU_VERSION: ${{ github.event.inputs.iwyu_baranch }}
+  UBUNTU_VERSION: ${{ github.event.inputs.ubuntu_version }}
+  CLANG_VERSION: ${{ github.event.inputs.clang_version }}
+  IWYU_VERSION: ${{ github.event.inputs.iwyu_baranch }}
 
 jobs:
   push_to_registries:
