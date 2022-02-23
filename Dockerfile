@@ -20,8 +20,7 @@ RUN apt-get update -q -y && \
 # clang
 COPY apt-add-repository.sh /tmp/apt-add-repository.sh
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    source /etc/os-release && \
-    /tmp/apt-add-repository.sh "deb http://apt.llvm.org/${UBUNTU_CODENAME}/ llvm-toolchain-${UBUNTU_CODENAME}-${CLANG_VERSION} main" && \
+    /tmp/apt-add-repository.sh "${CLANG_VERSION}" && \
     apt-get update && \
     apt-get install -y --no-install-recommends "llvm-${CLANG_VERSION}-dev" "libclang-${CLANG_VERSION}-dev" "clang-${CLANG_VERSION}" && \
     apt-get clean && \

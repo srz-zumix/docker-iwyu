@@ -19,3 +19,6 @@ docker-run: ## run docker image
 
 clang-9:
 	docker build -t ${IMAGE_NAME}:clang-9 --build-arg CLANG_VERSION=9 --build-arg IWYU_BRANCH=clang_9.0 .
+
+clang-8:
+	docker build -t ${IMAGE_NAME}:clang-8 --build-arg CLANG_VERSION=8 --build-arg IWYU_BRANCH=clang_8.0 .
