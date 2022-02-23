@@ -46,7 +46,7 @@ jobs:
           build-args: |
             UBUNTU_VERSION=${{ github.event.inputs.ubuntu_version || steps.default-build-args.outputs.ubuntu_version }}
             CLANG_VERSION=${{ github.event.inputs.clang_version || steps.default-build-args.outputs.clang_version }}
-            IWYU_VERSION=${{ github.event.inputs.iwyu_baranch || steps.default-build-args.outputs.iwyu_baranch }}
+            IWYU_BRANCH=${{ github.event.inputs.iwyu_baranch || steps.default-build-args.outputs.iwyu_baranch }}
         if: (github.event_name != 'push' || github.ref != 'refs/heads/master')
       - name: Push to latest
         uses: docker/build-push-action@v2
