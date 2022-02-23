@@ -18,9 +18,9 @@ on:
         required: true
 
 env:
-  UBUNTU_VERSION: ${{ github.event.inputs.ubuntu_version }}
-  CLANG_VERSION: ${{ github.event.inputs.clang_version }}
-  IWYU_VERSION: ${{ github.event.inputs.iwyu_baranch }}
+  UBUNTU_VERSION: ${{ github.event.inputs.ubuntu_version || 'latest' }}
+  CLANG_VERSION: ${{ github.event.inputs.clang_version || '13' }}
+  IWYU_VERSION: ${{ github.event.inputs.iwyu_baranch || 'clang_13' }}
 
 jobs:
   push_to_registries:
@@ -39,9 +39,9 @@ jobs:
           push: false
           tags: srzzumix/iwyu:latest
           build-args: |
-            UBUNTU_VERSION=${UBUNTU_VERSION:-latest}
-            CLANG_VERSION=${CLANG_VERSION:-13}
-            IWYU_VERSION=${IWYU_VERSION:-clang_13}
+            UBUNTU_VERSION=${UBUNTU_VERSION}
+            CLANG_VERSION=${CLANG_VERSION}
+            IWYU_VERSION=${IWYU_VERSION}
         if: (github.event_name != 'push' && github.ref != 'refs/heads/master')
       - name: Push to latest
         uses: docker/build-push-action@v2
