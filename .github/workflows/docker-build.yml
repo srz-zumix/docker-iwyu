@@ -9,11 +9,11 @@ on:
         description: 'ubuntu docker tag'
         required: true
       clang_version:
-        default: ''
+        default: '13'
         description: 'clang version. see https://apt.llvm.org/'
         required: true
       iwyu_baranch:
-        default: ''
+        default: 'clang_13'
         description: 'include-what-you-use branch. see https://github.com/include-what-you-use/include-what-you-use/branches'
         required: true
 
@@ -33,6 +33,11 @@ jobs:
         with:
           push: false
           tags: srzzumix/iwyu:latest
+          build-args: |
+            UBUNTU_VERSION=${{ github.event.inputs.ubuntu_version || 'latest' }}
+            CLANG_VERSION=${{ github.event.inputs.clang_version || '13' }}
+            IWYU_VERSION=${{ github.event.inputs.iwyu_baranch || 'clang_13' }}
+        if: (github.event_name != 'push' && github.ref != 'refs/heads/master')
       - name: Push to latest
         uses: docker/build-push-action@v2
         with:
