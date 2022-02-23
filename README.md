@@ -6,6 +6,10 @@
 
 [DockerHub](https://hub.docker.com/r/srzzumix/iwyu/)
 
+dockerized [include-what-you-use][]
+
 ## Usage
 
 docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu:clang-9 -c "CXX=iwyu CC=iwyu \<your build command\>"
+
+[include-what-you-use]:https://github.com/include-what-you-use/include-what-you-use
