@@ -13,12 +13,34 @@ jobs:
     strategy:
       matrix:
         include:
+          - clang_version: 3.6
+            iwyu_baranch: clang_3.6
+          - clang_version: 3.7
+            iwyu_baranch: clang_3.7
+          - clang_version: 3.8
+            iwyu_baranch: clang_3.8
+          - clang_version: 3.9
+            iwyu_baranch: clang_3.9
+          - clang_version: 4.0
+            iwyu_baranch: clang_4.0-r2
+          - clang_version: 5.0
+            iwyu_baranch: clang_5.0
+          - clang_version: 6
+            iwyu_baranch: clang_6.0
+          - clang_version: 7
+            iwyu_baranch: clang_7.0
+          - clang_version: 8
+            iwyu_baranch: clang_8.0
+          - clang_version: 9
+            iwyu_baranch: clang_9.0
           - clang_version: 10
             iwyu_baranch: clang_10
           - clang_version: 11
             iwyu_baranch: clang_11
           - clang_version: 12
             iwyu_baranch: clang_12
+          - clang_version: 13
+            iwyu_baranch: clang_13
     steps:
       - name: Invoke workflow
         uses: benc-uk/workflow-dispatch@v1
