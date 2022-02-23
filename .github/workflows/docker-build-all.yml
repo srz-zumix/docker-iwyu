@@ -9,7 +9,7 @@ on:
 
 jobs:
   trigger:
-    run:
+    runs-on: ubuntu-latest
     strategy:
       include:
         - clang_version: 10
