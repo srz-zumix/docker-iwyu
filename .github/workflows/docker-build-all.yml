@@ -25,7 +25,7 @@ jobs:
             iwyu_baranch: clang_4.0-r2
           - clang_version: 5.0
             iwyu_baranch: clang_5.0
-          - clang_version: 6
+          - clang_version: 6.0
             iwyu_baranch: clang_6.0
           - clang_version: 7
             iwyu_baranch: clang_7.0
