@@ -31,7 +31,10 @@ RUN mkdir /target && \
     mkdir iwyu && mkdir iwyu/build && \
     git clone -b "${IWYU_BRANCH}" https://github.com/include-what-you-use/include-what-you-use.git iwyu/include-what-you-use
 WORKDIR /iwyu/build
-RUN cmake -G "Unix Makefiles" "-DCMAKE_PREFIX_PATH=/usr/lib/llvm-${CLANG_VERSION}" ../include-what-you-use && \
+RUN cmake -G "Unix Makefiles" \
+        "-DCMAKE_PREFIX_PATH=/usr/lib/llvm-${CLANG_VERSION}" \
+        "-DIWYU_LLVM_ROOT_PATH=/usr/lib/llvm-${CLANG_VERSION}" \
+        ../include-what-you-use && \
     make && make install && \
     ln -s "$(command -v include-what-you-use)" /usr/local/bin/iwyu
 
