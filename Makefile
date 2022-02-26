@@ -25,3 +25,6 @@ clang-8:
 
 clang-6:
 	docker build -t ${IMAGE_NAME}:clang-6 --build-arg CLANG_VERSION=6.0 --build-arg IWYU_BRANCH=clang_6.0 .
+
+clang-3.9:
+	docker build -t ${IMAGE_NAME}:clang-3.9 --build-arg CLANG_VERSION=3.9 --build-arg IWYU_BRANCH=clang_3.9 .
