@@ -7,14 +7,16 @@ ARG IWYU_BRANCH=clang_13
 ARG CLANG_VERSION=13
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+COPY apt-get-install.sh /tmp/apt-get-install.sh
 RUN apt-get update -q -y && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-get update -q -y && \
     apt-get install -y --no-install-recommends wget curl git make cmake gcc g++ \
         libncurses-dev zlib1g-dev \
-        python gpg-agent && \
+        python && \
+    /tmp/apt-get-install.sh && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/apt-get-install.sh
 
 
 # clang

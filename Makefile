@@ -17,6 +17,8 @@ docker-clean-build: ## clean docker image
 docker-run: ## run docker image
 	docker run -it --rm ${IMAGE_NAME}
 
+latest: docker-build
+
 clang-9:
 	docker build -t ${IMAGE_NAME}:clang-9 --build-arg CLANG_VERSION=9 --build-arg IWYU_BRANCH=clang_9.0 .
 
@@ -31,3 +33,6 @@ bionic-clang-6:
 
 bionic-clang-3.9:
 	docker build -t ${IMAGE_NAME}:bionic-clang-3.9 --build-arg UBUNTU_VERSION=bionic --build-arg CLANG_VERSION=3.9 --build-arg IWYU_BRANCH=clang_3.9 .
+
+xenial-clang-3.8:
+	docker build -t ${IMAGE_NAME}:xenial-clang-3.8 --build-arg UBUNTU_VERSION=xenial --build-arg CLANG_VERSION=3.8 --build-arg IWYU_BRANCH=clang_3.8 .
