@@ -17,11 +17,18 @@ function tag () {
     docker push "${DOCKER_REPO}:$1"
 }
 
-tag "${DOCKER_TAG}-clang-${CLANG_TAG}"
-tag "${DOCKER_TAG}-iwyu-${IWYU_VERSION}"
-tag "${DOCKER_TAG}-iwyu-${IWYU_VERSION}-clang-${CLANG_TAG}"
+function tags() {
+    tag "$1-clang-${CLANG_TAG}"
+    tag "$1-iwyu-${IWYU_VERSION}"
+    tag "$1-iwyu-${IWYU_VERSION}-clang-${CLANG_TAG}"
+}
+
+tags "${DOCKER_TAG}"
 
 if [ "${DOCKER_TAG}" = "latest" ]; then
     tag "clang-${CLANG_TAG}"
     tag "iwyu-${IWYU_VERSION}-clang-${CLANG_TAG}"
+
+    export $(docker run --entrypoint=cat --rm ${IMAGE_NAME} /etc/os-release | grep "UBUNTU_CODENAME" | xargs)
+    tags "${UBUNTU_CODENAME}"
 fi
