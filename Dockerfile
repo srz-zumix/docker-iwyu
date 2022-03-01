@@ -25,6 +25,8 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     /tmp/apt-add-repository.sh "${CLANG_VERSION}" && \
     apt-get update && \
     apt-get install -y --no-install-recommends "llvm-${CLANG_VERSION}-dev" "libclang-${CLANG_VERSION}-dev" "clang-${CLANG_VERSION}" && \
+    update-alternatives --install /usr/bin/clang   clang   "/usr/bin/clang-${CLANG_VERSION}" 999 \
+                        --slave   /usr/bin/clang++ clang++ "/usr/bin/clang++-${CLANG_VERSION}" && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/apt-add-repository.sh
 
