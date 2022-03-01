@@ -29,6 +29,6 @@ if [ "${DOCKER_TAG}" = "latest" ]; then
     tag "clang-${CLANG_TAG}"
     tag "iwyu-${IWYU_VERSION}-clang-${CLANG_TAG}"
 
-    export $(docker run --entrypoint=cat --rm ${IMAGE_NAME} /etc/os-release  | grep -v "^#" | xargs)
+    export $(docker run --entrypoint=cat --rm ${IMAGE_NAME} /etc/os-release | grep "UBUNTU_CODENAME" | xargs)
     tags "${UBUNTU_CODENAME}"
 fi
