@@ -7,6 +7,7 @@ ARG IWYU_BRANCH=clang_13
 ARG CLANG_VERSION=13
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENV DEBIAN_FRONTEND=noninteractive
 COPY apt-get-install.sh /tmp/apt-get-install.sh
 RUN apt-get update -q -y && \
     apt-get install -y --no-install-recommends software-properties-common && \
