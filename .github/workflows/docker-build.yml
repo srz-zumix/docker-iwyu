@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: SetUp buildx
+        uses: docker/setup-buildx-action@v1
       - name: Set Default build-args
         id: default-build-args
         env:
@@ -40,6 +42,11 @@ jobs:
           echo "##[set-output name=ubuntu_version;]${{ github.event.inputs.ubuntu_version || steps.default-build-args.outputs.ubuntu_version }}"
           echo "##[set-output name=clang_version;]${{ github.event.inputs.clang_version || steps.default-build-args.outputs.clang_version }}"
           echo "##[set-output name=iwyu_baranch;]${{ github.event.inputs.iwyu_baranch || steps.default-build-args.outputs.iwyu_baranch }}"
+      - name: Set tag
+        id: tag
+        run: |
+          echo "::echo::on"
+          echo "##[set-output name=build;]${{ steps.build-args.outputs.ubuntu_version }}-branch-${{ steps.build-args.outputs.iwyu_baranch }}"
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -48,23 +55,27 @@ jobs:
       - name: Build docker image
         uses: docker/build-push-action@v2
         with:
-          push: false
-          tags: srzzumix/iwyu:${{ steps.build-args.outputs.ubuntu_version }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            srzzumix/iwyu:${{ steps.tag.output.build }}
           build-args: |
             UBUNTU_VERSION=${{ steps.build-args.outputs.ubuntu_version }}
             CLANG_VERSION=${{ steps.build-args.outputs.clang_version }}
             IWYU_BRANCH=${{ steps.build-args.outputs.iwyu_baranch }}
-        if: (github.event_name != 'push' || github.ref != 'refs/heads/master')
+          tags: srzzumix/iwyu:${{ steps.build-args.outputs.ubuntu_version }}
       - name: Push to latest
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: srzzumix/iwyu:${{ steps.build-args.outputs.ubuntu_version }}
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            srzzumix/iwyu:latest
         if: (github.event_name == 'push' && github.ref == 'refs/heads/master')
       - name: Push to version tag
         env:
           DOCKER_TAG: ${{ steps.build-args.outputs.ubuntu_version }}
-          IMAGE_NAME: srzzumix/iwyu:${{ steps.build-args.outputs.ubuntu_version }}
+          IMAGE_NAME: srzzumix/iwyu:${{ steps.tag.output.build }}
           DOCKER_REPO: srzzumix/iwyu
         run: |
           ./hooks/post_push
