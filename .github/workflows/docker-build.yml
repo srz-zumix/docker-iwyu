@@ -44,11 +44,6 @@ jobs:
           echo "##[set-output name=ubuntu_version;]${{ github.event.inputs.ubuntu_version || steps.default-build-args.outputs.ubuntu_version }}"
           echo "##[set-output name=clang_version;]${{ github.event.inputs.clang_version || steps.default-build-args.outputs.clang_version }}"
           echo "##[set-output name=iwyu_baranch;]${{ github.event.inputs.iwyu_baranch || steps.default-build-args.outputs.iwyu_baranch }}"
-      - name: Set tag
-        id: build-tag
-        run: |
-          echo "::echo::on"
-          echo "##[set-output name=name;]${{ steps.build-args.outputs.ubuntu_version }}-branch-${{ steps.build-args.outputs.iwyu_baranch }}"
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -60,7 +55,7 @@ jobs:
           push: false
           load: true
           tags: |
-            srzzumix/iwyu:${{ steps.build-tag.outputs.name }}
+            srzzumix/iwyu:local
           build-args: |
             UBUNTU_VERSION=${{ steps.build-args.outputs.ubuntu_version }}
             CLANG_VERSION=${{ steps.build-args.outputs.clang_version }}
@@ -68,7 +63,7 @@ jobs:
       - name: List version tags
         env:
           DOCKER_TAG: ${{ steps.build-args.outputs.ubuntu_version }}
-          IMAGE_NAME: srzzumix/iwyu:${{ steps.build-tag.outputs.name }}
+          IMAGE_NAME: srzzumix/iwyu:local
           DOCKER_REPO: srzzumix/iwyu
         run: |
           ./hooks/tags > tags.txt
@@ -80,20 +75,20 @@ jobs:
         id: push-tag
         run: |
           echo "##[set-output name=names;]$(cat tags.txt)"
-      # - name: Push docker image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     push: true
-      #     platforms: linux/amd64,linux/arm64
-      #     tags: ${{ steps.push-tag.outputs.names }}
-      #     build-args: |
-      #       UBUNTU_VERSION=${{ steps.build-args.outputs.ubuntu_version }}
-      #       CLANG_VERSION=${{ steps.build-args.outputs.clang_version }}
-      #       IWYU_BRANCH=${{ steps.build-args.outputs.iwyu_baranch }}
-      - name: Push to version tag
-        env:
-          DOCKER_TAG: ${{ steps.build-args.outputs.ubuntu_version }}
-          IMAGE_NAME: srzzumix/iwyu:${{ steps.build-tag.outputs.name }}
-          DOCKER_REPO: srzzumix/iwyu
-        run: |
-          ./hooks/post_push
+      - name: Push docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.push-tag.outputs.names }}
+          build-args: |
+            UBUNTU_VERSION=${{ steps.build-args.outputs.ubuntu_version }}
+            CLANG_VERSION=${{ steps.build-args.outputs.clang_version }}
+            IWYU_BRANCH=${{ steps.build-args.outputs.iwyu_baranch }}
+      # - name: Push to version tag
+      #   env:
+      #     DOCKER_TAG: ${{ steps.build-args.outputs.ubuntu_version }}
+      #     IMAGE_NAME: srzzumix/iwyu:local
+      #     DOCKER_REPO: srzzumix/iwyu
+      #   run: |
+      #     ./hooks/post_push
