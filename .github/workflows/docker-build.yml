@@ -58,7 +58,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            srzzumix/iwyu:${{ steps.build-tag.output.name }}
+            srzzumix/iwyu:${{ steps.build-tag.outputs.name }}
           build-args: |
             UBUNTU_VERSION=${{ steps.build-args.outputs.ubuntu_version }}
             CLANG_VERSION=${{ steps.build-args.outputs.clang_version }}
@@ -74,7 +74,7 @@ jobs:
       - name: Push to version tag
         env:
           DOCKER_TAG: ${{ steps.build-args.outputs.ubuntu_version }}
-          IMAGE_NAME: srzzumix/iwyu:${{ steps.build-tag.output.name }}
+          IMAGE_NAME: srzzumix/iwyu:${{ steps.build-tag.outputs.name }}
           DOCKER_REPO: srzzumix/iwyu
         run: |
           ./hooks/post_push
