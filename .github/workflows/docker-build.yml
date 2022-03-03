@@ -74,7 +74,9 @@ jobs:
       - name: Get version tags
         id: push-tag
         run: |
-          echo "##[set-output name=names;]$(cat tags.txt)"
+          TAGS=$(cat tags.txt)
+          TAGS="${TAGS//$'\n'/\\n}"
+          echo "##[set-output name=names;]${TAGS}"
       - name: Push docker image
         uses: docker/build-push-action@v2
         with:
