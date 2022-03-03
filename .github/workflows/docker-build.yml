@@ -69,7 +69,7 @@ jobs:
           ./hooks/tags > tags.txt
       - name: Add latest tags
         run: |
-          echo latest >> tags.txt
+          echo srzzumix/iwyu:latest >> tags.txt
         if: (github.event_name == 'push' && github.ref == 'refs/heads/master')
       - name: Get version tags
         id: push-tag
