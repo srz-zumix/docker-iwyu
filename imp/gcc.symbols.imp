@@ -1,0 +1,3 @@
+[
+  { symbol: [ "wint_t", private, "<wchar.h>", public ] }
+]

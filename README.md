@@ -10,6 +10,15 @@ dockerized [include-what-you-use][]
 
 ## Usage
 
-docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu:clang-9 -c "CXX=iwyu CC=iwyu \<your build command\>"
+```sh
+docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu:clang-13 -c "CXX=iwyu CC=iwyu \<your build command\>"
+```
+
+```sh
+$ docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu:clang-13
+root@49089388910c:/target# mkdir build && cd build
+root@49089388910c:/target# CC="clang" CXX="clang++" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ...
+root@49089388910c:/target# iwyu_tool.py -j2 -p ./cmake-build -Xiwyu --no_fwd_decls
+```
 
 [include-what-you-use]:https://github.com/include-what-you-use/include-what-you-use

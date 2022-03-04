@@ -7,6 +7,9 @@ CLANG_VERSION=$(echo ${IWYU_VERSION_STR} | sed "s/.*based on .*clang version\s*\
 CLANG_MAJOR="${CLANG_VERSION%%.*}"
 CLANG_MAJOR_MINOR="${CLANG_VERSION%.*}"
 
+export $(docker run --entrypoint=cat --rm ${IMAGE_NAME} /etc/os-release | grep "VERSION_ID" | xargs)
+UBUNTU_MAJOR="${VERSION_ID%%.*}"
+
 CLANG_TAG="${CLANG_MAJOR}"
 if [ "${CLANG_MAJOR}" -le 3 ]; then
     CLANG_TAG="${CLANG_MAJOR_MINOR}"
@@ -26,6 +29,7 @@ tags "${DOCKER_TAG}"
 
 if [ "${DOCKER_TAG}" = "latest" ]; then
     tag "clang-${CLANG_TAG}"
+    tag "iwyu-${IWYU_VERSION}"
     tag "iwyu-${IWYU_VERSION}-clang-${CLANG_TAG}"
 
     export $(docker run --entrypoint=cat --rm ${IMAGE_NAME} /etc/os-release | grep "UBUNTU_CODENAME" | xargs)
