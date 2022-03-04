@@ -47,6 +47,9 @@ RUN cmake -G "Unix Makefiles" \
 RUN mkdir /usr/local/lib/clang && \
     ln -s /usr/lib/clang/* /usr/local/lib/clang/
 
+# copy imp
+COPY imp/ /opt/iwyu/
+
 
 VOLUME [ "/target" ]
 WORKDIR /target
