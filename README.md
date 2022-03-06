@@ -18,7 +18,7 @@ docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu:clang-13 -c "
 $ docker run -it -v ${pwd}:/target --entrypoint="bash" srzzumix/iwyu:clang-13
 root@49089388910c:/target# mkdir build && cd build
 root@49089388910c:/target# CC="clang" CXX="clang++" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ...
-root@49089388910c:/target# iwyu_tool.py -j2 -p ./cmake-build -Xiwyu --no_fwd_decls
+root@49089388910c:/target# iwyu_tool.py -j2 -p ./cmake-build -Xiwyu --mapping_file=/opt/iwyu/gcc.symbols.imp
 ```
 
 [include-what-you-use]:https://github.com/include-what-you-use/include-what-you-use
