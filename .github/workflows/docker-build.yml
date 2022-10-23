@@ -34,16 +34,16 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           gh workflow view "${GITHUB_WORKFLOW}" --yaml | tee workflow.yml
-          echo "##[set-output name=ubuntu_version;]$(yq '.on.workflow_dispatch.inputs.ubuntu_version.default' workflow.yml)"
-          echo "##[set-output name=clang_version;]$(yq '.on.workflow_dispatch.inputs.clang_version.default' workflow.yml)"
-          echo "##[set-output name=iwyu_baranch;]$(yq '.on.workflow_dispatch.inputs.iwyu_baranch.default' workflow.yml)"
+          echo "ubuntu_version=$(yq '.on.workflow_dispatch.inputs.ubuntu_version.default' workflow.yml)" >> "${GITHUB_OUTPUT}"
+          echo "clang_version=$(yq '.on.workflow_dispatch.inputs.clang_version.default' workflow.yml)" >> "${GITHUB_OUTPUT}"
+          echo "iwyu_baranch=$(yq '.on.workflow_dispatch.inputs.iwyu_baranch.default' workflow.yml)" >> "${GITHUB_OUTPUT}"
       - name: Set build-args
         id: build-args
         run: |
           echo "::echo::on"
-          echo "##[set-output name=ubuntu_version;]${{ github.event.inputs.ubuntu_version || steps.default-build-args.outputs.ubuntu_version }}"
-          echo "##[set-output name=clang_version;]${{ github.event.inputs.clang_version || steps.default-build-args.outputs.clang_version }}"
-          echo "##[set-output name=iwyu_baranch;]${{ github.event.inputs.iwyu_baranch || steps.default-build-args.outputs.iwyu_baranch }}"
+          echo "ubuntu_version=${{ github.event.inputs.ubuntu_version || steps.default-build-args.outputs.ubuntu_version }}" >> "${GITHUB_OUTPUT}"
+          echo "clang_version=${{ github.event.inputs.clang_version || steps.default-build-args.outputs.clang_version }}" >> "${GITHUB_OUTPUT}"
+          echo "iwyu_baranch=${{ github.event.inputs.iwyu_baranch || steps.default-build-args.outputs.iwyu_baranch }}" >> "${GITHUB_OUTPUT}"
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -76,7 +76,7 @@ jobs:
         run: |
           TAGS=$(cat tags.txt)
           CSV_TAGS="${TAGS//$'\n'/,}"
-          echo "##[set-output name=names;]${CSV_TAGS}"
+          echo "names=${CSV_TAGS}" >> "${GITHUB_OUTPUT}"
       - name: Push docker image
         uses: docker/build-push-action@v2
         with:
