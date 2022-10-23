@@ -14,7 +14,7 @@ RUN apt-get update -q -y && \
     apt-get update -q -y && \
     apt-get install -y --no-install-recommends wget curl git make cmake gcc g++ \
         libncurses-dev zlib1g-dev \
-        python && \
+        python python-is-python3 && \
     /tmp/apt-get-install.sh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/apt-get-install.sh
