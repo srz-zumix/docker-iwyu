@@ -41,6 +41,10 @@ jobs:
             iwyu_baranch: clang_12
           - clang_version: 13
             iwyu_baranch: clang_13
+          - clang_version: 14
+            iwyu_baranch: clang_14
+          - clang_version: 15
+            iwyu_baranch: clang_15
     steps:
       - name: Invoke workflow
         uses: benc-uk/workflow-dispatch@v1

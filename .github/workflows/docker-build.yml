@@ -9,11 +9,11 @@ on:
         description: 'ubuntu docker tag'
         required: true
       clang_version:
-        default: '13'
+        default: '15'
         description: 'clang version. see https://apt.llvm.org/'
         required: true
       iwyu_baranch:
-        default: 'clang_13'
+        default: 'clang_15'
         description: 'include-what-you-use branch. see https://github.com/include-what-you-use/include-what-you-use/branches'
         required: true
 
